@@ -24,15 +24,6 @@ public abstract class Task implements Repeatable {
         setTaskTime(taskTime);
     }
 
-
-    public static int getIdGenerator() {
-        return idGenerator;
-    }
-
-    public static void setIdGenerator(int idGenerator) {
-        Task.idGenerator = idGenerator;
-    }
-
     public int getId() {
         return id;
     }
@@ -80,15 +71,9 @@ public abstract class Task implements Repeatable {
     }
 
 
-    public LocalDateTime getTaskTime() throws IncorrectArgumentException {
-        if (taskTime != null) {
-            this.taskTime = taskTime;
-        } else {
-            throw new IncorrectArgumentException(" Дата и время задачи");
-        }
+    public LocalDateTime getTaskTime()  {
         return null;
     }
-
 
     public void setTaskTime(LocalDateTime taskTime) {
             this.taskTime = taskTime;

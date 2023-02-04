@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-    private static final TaskService taskService = new TaskService();
+    private static final TaskService TASK_SERVICE = new TaskService();
 
     private static final Pattern DATE_TIME_PATTERN = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{4}\\ \\d{2}\\:\\d{2}");
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("день.месяц.год часы:минуты");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.mm.yyyy HH:mm");
 
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{4}");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("день.месяц.год");
@@ -57,7 +57,6 @@ public class Main {
             return LocalDateTime.parse(dateTime, DATE_TIME_FORMATTER);
         } else {
             System.out.println(" Введите дату и время задачи в формате день.месяц.год часы:минуты");
-            scanner.close();
             return null;
         }
     }
@@ -80,7 +79,7 @@ public class Main {
         int id = scanner.nextInt();
 
         try {
-            taskService.remove(id);
+            TASK_SERVICE.remove(id);
         } catch (TaskNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -92,14 +91,13 @@ public class Main {
             String dateTime = scanner.next(DATE_PATTERN);
             LocalDate inputDate =  LocalDate.parse(dateTime, DATE_FORMATTER);
 
-            Collection<Task> taskByDay = taskService.getAllByDate(inputDate);
+            Collection<Task> taskByDay = TASK_SERVICE.getAllByDate(inputDate);
 
             for (Task task : taskByDay) {
                 System.out.println(task);
             }
         } else {
             System.out.println(" Введите дату в формате день.месяц.год ");
-            scanner.close();
         }
 
     }
@@ -133,7 +131,7 @@ public class Main {
         }
 
         if (task != null) {
-            taskService.add(task);
+            TASK_SERVICE.add(task);
             System.out.println(" Задача добавлена");
         } else {
             System.out.println("Некорректный ввод данных по задаче");
@@ -147,7 +145,6 @@ public class Main {
 
         if (title.isBlank()) {
             System.out.println(" Необходимо ввести название задачи");
-            scanner.close();
         }
         return title;
     }
@@ -158,7 +155,6 @@ public class Main {
 
         if (descriptin.isBlank()) {
             System.out.println(" Необходимо ввести описание задачи");
-            scanner.close();
         }
         return descriptin;
     }
@@ -178,7 +174,6 @@ public class Main {
                 break;
             default:
                 System.out.println(" Тип задачи введен некорректно");
-                scanner.close();
         }
 
         return type;
@@ -192,7 +187,6 @@ public class Main {
             return scanner.nextInt();
         }else {
             System.out.println(" Ведите числом повторяемость задачи");
-            scanner.close();
         }
         return -1;
     }
